@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Simulation 3D</title>
+
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        #hello,
+        #hello2 {
+            width: 600px;
+            height: 500px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div id="hello"></div>
+
+    <div id="hello2"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/beforeafter.js"></script>
+
+    <script>
+        backgroundCompare({
+            beforeImage: "before1.jpg",
+            afterImage: "after1_wm.jpg",
+            bgSize: "contain",
+            targetId: "hello"
+        });
+
+        backgroundCompare({
+            beforeImage: "before1.jpg",
+            afterImage: "after1_wm.jpg",
+            bgSize: "contain",
+            targetId: "hello2"
+        });
+    </script>
+
+</body>
+
+</html>
