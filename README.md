@@ -1,5 +1,7 @@
 # bgCompare.js
-bgCompare is a jQuery script to compare 2 images for differences, to create a before/after effect. It is fully responsive and works on all devices. It can even be put into a lightbox, like (http://cornel.bopp-art.com/lightcase/ "lightbox.js"). It is easy to set up an
+bgCompare is a jQuery script to compare 2 images for differences, to create a before/after effect. It is fully responsive and works on all devices. It can even be put into a lightbox, like (http://cornel.bopp-art.com/lightcase/ "lightbox.js"). It is easy to set up anywhere.
+
+..* (https://theflupke.github.io/bgCompare/ "DEMO")
 
 ## Instructions
 
