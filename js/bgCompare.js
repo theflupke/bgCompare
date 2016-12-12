@@ -111,7 +111,7 @@ function bgCompare(options) {
         });
 
 
-        $(document).ready(function() {
+        $(window).load(function() {
             $(document).find('.comparison-slider').css({
                 left: sliderPos
             });
