@@ -44,48 +44,48 @@ function bgCompare(options) {
 
     //Generating the slider
 
-    var targetElement = document.getElementById(targetId);
+    let targetElement = document.getElementById(targetId);
 
-    var docfrag = document.createDocumentFragment();
+    let docfrag = document.createDocumentFragment();
 
-    var container1 = document.createElement("div");
+    let container1 = document.createElement("div");
     container1.className = "super-container";
     docfrag.appendChild(container1);
 
-    var container2 = document.createElement('div');
+    let container2 = document.createElement('div');
     container2.className = "aspect-container";
     container1.appendChild(container2);
 
-    var aspectCritical = document.createElement('div');
+    let aspectCritical = document.createElement('div');
     aspectCritical.className = "aspect-critical-content";
     container2.appendChild(aspectCritical);
 
-    var beforeWrapper = document.createElement('div');
+    let beforeWrapper = document.createElement('div');
     beforeWrapper.className = "before-wrapper";
     beforeWrapper.id = "before" + targetId;
     aspectCritical.appendChild(beforeWrapper);
 
-    var afterWrapper = document.createElement('div');
+    let afterWrapper = document.createElement('div');
     afterWrapper.className = "after-wrapper";
     beforeWrapper.appendChild(afterWrapper);
 
-    var afterImage = document.createElement('div');
+    let afterImage = document.createElement('div');
     afterImage.className = "after-image";
     afterImage.id = "after" + targetId;
     afterWrapper.appendChild(afterImage);
 
-    var sliderHandle = document.createElement('div');
+    let sliderHandle = document.createElement('div');
     sliderHandle.className = "comparison-slider handle";
     sliderHandle.id = handleTheme;
     aspectCritical.appendChild(sliderHandle);
 
     if (showTooltips === "yes") {
-        var beforeTooltip = document.createElement('div');
+        let beforeTooltip = document.createElement('div');
         beforeTooltip.className = "avant";
         beforeTooltip.textContent = txtBefore;
         sliderHandle.appendChild(beforeTooltip);
 
-        var afterTooltip = document.createElement('div');
+        let afterTooltip = document.createElement('div');
         afterTooltip.className = "apres";
         afterTooltip.textContent = txtAfter;
         sliderHandle.appendChild(afterTooltip);
@@ -96,8 +96,8 @@ function bgCompare(options) {
 
     // Putting the images in the background
 
-    var beforeTarget = "#before" + targetId;
-    var afterTarget = "#after" + targetId;
+    let beforeTarget = "#before" + targetId;
+    let afterTarget = "#after" + targetId;
 
 
     $(beforeTarget).css({
@@ -139,12 +139,12 @@ function bgCompare(options) {
 
     $(targetElement).on("touchmove", function(e) {
         e.preventDefault();
-        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
         if (down) {
 
-            var offsets = $(targetElement).find('.before-wrapper').offset();
-            var fullWidth = $(targetElement).find('.before-wrapper').width();
-            var mouseX = touch.pageX - offsets.left;
+            let offsets = $(targetElement).find('.before-wrapper').offset();
+            let fullWidth = $(targetElement).find('.before-wrapper').width();
+            let mouseX = touch.pageX - offsets.left;
 
             if (mouseX < 0) { mouseX = 0; } else if (mouseX > fullWidth) { mouseX = fullWidth }
 
@@ -169,9 +169,9 @@ function bgCompare(options) {
 
         if (down) {
 
-            var offsets = $(targetElement).find('.before-wrapper').offset();
-            var fullWidth = $(targetElement).find('.before-wrapper').width();
-            var mouseX = e.pageX - offsets.left;
+            let offsets = $(targetElement).find('.before-wrapper').offset();
+            let fullWidth = $(targetElement).find('.before-wrapper').width();
+            let mouseX = e.pageX - offsets.left;
 
 
 
