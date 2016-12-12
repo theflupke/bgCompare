@@ -151,15 +151,15 @@ function bgCompare(options) {
 
                 $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
                     left: mouseX,
-                    transition: 'none'
+                    transition: 'opacity 1s ease'
                 });
                 $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
                     transform: 'translateX(' + (mouseX) + 'px)',
-                    transition: 'none'
+                    transition: 'opacity 1s ease'
                 });
                 $(targetElement).find('.before-wrapper').find('.after-image').css({
                     transform: 'translateX(' + (-1 * mouseX) + 'px)',
-                    transition: 'none'
+                    transition: 'opacity 1s ease'
                 });
 
             }
@@ -181,24 +181,20 @@ function bgCompare(options) {
 
                 $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
                     left: mouseX,
-                    transition: 'none'
+                    transition: 'opacity 1s ease'
                 });
                 $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
                     transform: 'translateX(' + (mouseX) + 'px)',
-                    transition: 'none'
+                    transition: 'opacity 1s ease'
                 });
                 $(targetElement).find('.before-wrapper').find('.after-image').css({
                     transform: 'translateX(' + (-1 * mouseX) + 'px)',
-                    transition: 'none'
+                    transition: 'opacity 1s ease'
                 });
 
             }
 
         });
-
-
-
-
 
 
 

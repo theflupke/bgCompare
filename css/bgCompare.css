@@ -97,17 +97,22 @@
             width: 1px;
             margin-left: -1px;
             cursor: ew-resize;
+            opacity: .6;
+        }
+        
+        .handle:hover {
+            opacity: 1;
         }
         
         .handle::after {
             position: absolute;
             top: 50%;
-            width: 44px;
-            height: 44px;
-            margin: -25px 0 0 -25px;
-            content: '\2039   \203A';
+            width: 45px;
+            height: 45px;
+            margin: -22px 0 0 -22px;
+            content: '\2039    \203A';
             font-weight: bold;
-            font-size: 30px;
+            font-size: 31px;
             text-align: center;
             line-height: 40px;
             border-radius: 50%;
@@ -173,15 +178,18 @@
         /* light-theme */
         
         #light-theme.handle {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 1);
         }
         
         #light-theme.handle::after {
-            background: rgba(255, 255, 255, 0.4);
-            color: rgba(255, 255, 255, 0.8);
-            border: 3px solid #fff;
-            text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-            box-shadow: 0 0 6px rgba(0, 0, 0, .3);
+            background: rgba(255, 255, 255, 0);
+            color: rgba(255, 255, 255, 0.6);
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0);
+        }
+        
+        #light-theme.handle:hover::after {
+            color: rgba(255, 255, 255, 1);
         }
         
         #light-theme .avant,
