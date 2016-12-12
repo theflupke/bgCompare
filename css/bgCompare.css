@@ -151,7 +151,7 @@
             background: #fff;
             color: #0f72b5;
         }
-        /* dark */
+        /* dark-theme */
         
         #dark-theme.handle {
             background: rgba(0, 0, 0, 0.4);
@@ -169,4 +169,23 @@
         #dark-theme .apres {
             background: rgba(0, 0, 0, 0.2);
             color: rgba(0, 0, 0, 1);
+        }
+        /* light-theme */
+        
+        #light-theme.handle {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        #light-theme.handle::after {
+            background: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.8);
+            border: 3px solid #fff;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 6px rgba(0, 0, 0, .3);
+        }
+        
+        #light-theme .avant,
+        #light-theme .apres {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 1);
         }

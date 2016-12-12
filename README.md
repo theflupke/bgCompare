@@ -40,11 +40,12 @@ bgCompare is a jQuery script to compare 2 images for differences, to create a be
  bgCompare({
           beforeImage: "img/pvpayvqwuia-christian-sterk-before.jpg", // Your before image
           afterImage: "img/pvpayvqwuia-christian-sterk-after.jpg", // Your after image
-          bgSize: "contain", // the background-size ("cover", "contain" for responsive awesomeness)
+          bgSize: "contain", // the background-size ("cover", "contain" for responsive awesomeness) (default "contain")
           targetId: "backgroundCompare", // the id of the element you want the script to load into
-          showTooltips: "yes" // show or hide the tooltips next to the handle
-          txtBefore: "Before" // the text of the before tooltip
-          txtAfter: "After" // the text of the after tooltip
-          handleTheme: "dark-theme" // the theme of the handle
+          showTooltips: "yes", // show or hide the tooltips next to the handle (default "yes")
+          txtBefore: "Before", // the text of the before tooltip (default "Before")
+          txtAfter: "After", // the text of the after tooltip (default "After")
+          handleTheme: "dark-theme", // the theme of the handle (default "dark-theme")
+          sliderPos: "20%" // the position of the slider on load (default: "50%")
         });
 ```
