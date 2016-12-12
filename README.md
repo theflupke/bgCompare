@@ -4,12 +4,8 @@ bgCompare is a jQuery script to compare 2 images for differences, to create a be
 ## Instructions
 
 1. Link the css into the head of your html file
-
-```html
-    <link href="css/bgCompare.css" rel="stylesheet" type="text/css" />
-```
-
-2. Link the jquery and bgCompare.js just before the closing </body> tag
+2. Link  jQuery and bgCompare.js just before the closing </body> tag
+3. Add div container to body and configure bgCompare function for each slider. 
 
 ```html
 <html>
