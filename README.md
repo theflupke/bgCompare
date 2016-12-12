@@ -27,9 +27,9 @@ DEMO : http://theflupke.github.io/bgCompare/
      <script src="js/bgCompare.min.js"></script>
      <script>
        bgCompare({
-         targetId: "bgCompare", // Your element id
-          beforeImage: "img/pvpayvqwuia-christian-sterk-before.jpg", // Your before image
-          afterImage: "img/pvpayvqwuia-christian-sterk-after.jpg", // Your after image
+          targetId:     "bgCompare",                                  // Your element id
+          beforeImage:  "img/pvpayvqwuia-christian-sterk-before.jpg", // Your before image
+          afterImage:   "img/pvpayvqwuia-christian-sterk-after.jpg",  // Your after image
         });
       </script>
    </body>
