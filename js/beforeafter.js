@@ -4,9 +4,9 @@ function backgroundCompare(options) {
     const after = options.afterImage;
     const bgSize = options.bgSize || "contain";
     const targetId = options.targetId;
-    const showTooltips = options.showTooltips || true;
-    const ttBefore = options.beforeTooltip || "Before";
-    const ttAfter = options.afterTooltip || "After";
+    const showTooltips = options.showTooltips || "yes";
+    const txtBefore = options.beforeTooltip || "Before";
+    const txtAfter = options.afterTooltip || "After";
 
 
     console.log("Script Parameters:\n" + options);
@@ -33,6 +33,7 @@ function backgroundCompare(options) {
 
     var beforeWrapper = document.createElement('div');
     beforeWrapper.className = "before-wrapper";
+    beforeWrapper.id = "before" + targetId;
     aspectCritical.appendChild(beforeWrapper);
 
     var afterWrapper = document.createElement('div');
@@ -41,32 +42,41 @@ function backgroundCompare(options) {
 
     var afterImage = document.createElement('div');
     afterImage.className = "after-image";
+    afterImage.id = "after" + targetId;
     afterWrapper.appendChild(afterImage);
 
     var sliderHandle = document.createElement('div');
     sliderHandle.className = "comparison-slider handle";
     aspectCritical.appendChild(sliderHandle);
 
-    var beforeTooltip = document.createElement('div');
-    beforeTooltip.className = "avant";
-    beforeTooltip.textContent = ttBefore;
-    sliderHandle.appendChild(beforeTooltip);
+    if (showTooltips === "yes") {
+        var beforeTooltip = document.createElement('div');
+        beforeTooltip.className = "avant";
+        beforeTooltip.textContent = txtBefore;
+        sliderHandle.appendChild(beforeTooltip);
 
-    var afterTooltip = document.createElement('div');
-    afterTooltip.className = "apres";
-    afterTooltip.textContent = ttAfter;
-    sliderHandle.appendChild(afterTooltip);
+        var afterTooltip = document.createElement('div');
+        afterTooltip.className = "apres";
+        afterTooltip.textContent = txtAfter;
+        sliderHandle.appendChild(afterTooltip);
+    }
 
     targetElement.appendChild(docfrag);
 
 
     // Putting the images in the background
 
-    $(".before-wrapper").css({
+    var beforeTarget = "#before" + targetId;
+    var afterTarget = "#after" + targetId;
+
+    console.log(beforeTarget);
+
+
+    $(beforeTarget).css({
         "background": "url(" + before + ") center no-repeat",
         "background-size": bgSize
     });
-    $(".after-image").css({
+    $(afterTarget).css({
         "background": "url(" + after + ") center no-repeat",
         "background-size": bgSize
     });
