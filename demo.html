@@ -5,15 +5,65 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Simulation 3D</title>
+    <title>bgCompare.js</title>
 
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+    <link href="css/bgCompare.min.css" rel="stylesheet" type="text/css" />
 
     <style>
-        #hello,
-        #hello2 {
-            width: 600px;
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        
+        body {
+            background: #fff;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: "Roboto", sans-serif;
+        }
+        
+        header {
+            font-weight: 100;
+            text-align: center;
+            color: #999;
+        }
+        
+        header h1 {
+            font-size: 60px;
+            font-weight: 100;
+            margin-bottom: 0;
+        }
+        
+        header p {
+            font-size: 28px;
+        }
+        
+        #bgCompare {
+            width: 100%;
             height: 500px;
+            margin: 0 auto;
+            border: 1px solid #999;
+        }
+        
+        .infos {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        a,
+        a:visited {
+            margin: 0 auto;
+            font-size: 30px;
+            color: #000;
+            text-decoration: none;
+            background: #defcee;
+            transition: background .5s ease;
+        }
+        
+        a:hover {
+            background: #faf8d4;
         }
     </style>
 
@@ -22,28 +72,28 @@
 
 <body>
 
-    <div id="hello"></div>
+    <header>
+        <h1><span class="s1">background</span><span class="s2">Compare</span>.js</h1>
+        <p>A simple, lightweight jQuery before/after effect.</p>
+    </header>
 
-    <div id="hello2"></div>
+    <div id="bgCompare"></div>
+
+    <div class="infos">
+        <a href="https://github.com/theflupke/backgroundCompare">More info & Download on GitHub</a><br /><br />
+        <a href="mailto:contact@stephane-salomon.com">Send me an email</a>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="js/beforeafter.js"></script>
+    <script src="js/bgCompare.min.js"></script>
 
     <script>
-        backgroundCompare({
-            beforeImage: "before1.jpg",
-            afterImage: "after1_wm.jpg",
-            bgSize: "contain",
-            targetId: "hello",
-            showTooltips: "yes",
-            beforeTooltip: "avant"
-        });
-
-        backgroundCompare({
-            beforeImage: "avant1_wm.jpg",
-            afterImage: "apres1_wm.jpg",
-            bgSize: "contain",
-            targetId: "hello2"
+        bgCompare({
+            beforeImage: "img/pvpayvqwuia-christian-sterk-before.jpg",
+            afterImage: "img/pvpayvqwuia-christian-sterk-after.jpg",
+            bgSize: "cover",
+            targetId: "bgCompare",
+            handleTheme: "dark-theme"
         });
     </script>
 

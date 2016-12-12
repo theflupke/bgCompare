@@ -1,21 +1,50 @@
-function backgroundCompare(options) {
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            bgCompare.js
+                    ----------------------------
+                    a script by Stéphane Salomon
+                    contact@stephane-salomon.com
+                    ----------------------------
+                Copyright (c) 2016 Stéphane Salomon
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the 
+"Software"), to deal in the Software without restriction, including 
+without limitation the rights to use, copy, modify, merge, publish, 
+distribute, sublicense, and/or sell copies of the Software, and to 
+permit persons to whom the Software is furnished to do so, subject 
+to the following conditions:
+
+The above copyright notice and this permission notice shall be 
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+OTHER DEALINGS IN THE SOFTWARE.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+function bgCompare(options) {
     // getting the attributes
     const before = options.beforeImage;
     const after = options.afterImage;
     const bgSize = options.bgSize || "contain";
     const targetId = options.targetId;
     const showTooltips = options.showTooltips || "yes";
-    const txtBefore = options.beforeTooltip || "Before";
-    const txtAfter = options.afterTooltip || "After";
+    const txtBefore = options.txtBefore || "Before";
+    const txtAfter = options.txtAfter || "After";
+    const handleTheme = options.handleTheme || "dark-theme";
 
-
-    console.log("Script Parameters:\n" + options);
 
     //Generating the slider
 
     var targetElement = document.getElementById(targetId);
-
-    console.log("Target ID : " + targetElement);
 
     var docfrag = document.createDocumentFragment();
 
@@ -47,6 +76,7 @@ function backgroundCompare(options) {
 
     var sliderHandle = document.createElement('div');
     sliderHandle.className = "comparison-slider handle";
+    sliderHandle.id = handleTheme;
     aspectCritical.appendChild(sliderHandle);
 
     if (showTooltips === "yes") {
@@ -69,8 +99,6 @@ function backgroundCompare(options) {
     var beforeTarget = "#before" + targetId;
     var afterTarget = "#after" + targetId;
 
-    console.log(beforeTarget);
-
 
     $(beforeTarget).css({
         "background": "url(" + before + ") center no-repeat",
@@ -82,18 +110,19 @@ function backgroundCompare(options) {
     });
 
 
-    $(this).find('.comparison-slider').css({
-        left: '50%',
-        transition: 'all 1.5s'
+    $(document).ready(function() {
+        $(document).find('.comparison-slider').css({
+            left: '50%'
+        });
+        $(document).find('.after-wrapper').css({
+            transform: 'translateX(50%)'
+        });
+        $(document).find('.after-image').css({
+            transform: 'translateX(-50%)'
+        });
     });
-    $(this).find('.after-wrapper').css({
-        transform: 'translateX(50%)',
-        transition: 'all 1.5s'
-    });
-    $(this).find('.after-image').css({
-        transform: 'translateX(-50%)',
-        transition: 'all 1.5s'
-    });
+
+
 
 
     let down = false;
