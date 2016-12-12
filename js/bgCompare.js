@@ -35,7 +35,7 @@ function bgCompare(options) {
     const before = options.beforeImage;
     const after = options.afterImage;
     const bgSize = options.bgSize || "contain";
-    const targetId = options.targetId;
+    const targetId = options.targetId || "bgCompare;
     const showTooltips = options.showTooltips || "yes";
     const txtBefore = options.txtBefore || "Before";
     const txtAfter = options.txtAfter || "After";

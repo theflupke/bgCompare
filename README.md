@@ -1,5 +1,7 @@
 # bgCompare.js
-bgCompare is a jQuery script to compare 2 images for differences, to create a before/after effect. It is fully responsive and works on all devices. It can even be put into a lightbox, like (http://cornel.bopp-art.com/lightcase/ "lightbox.js"). It is easy to set up anywhere.
+bgCompare is a jQuery script to compare 2 images for differences, to create a before/after effect. 
+It is fully responsive and works on all devices. It can even be put into a lightbox, 
+like http://cornel.bopp-art.com/lightcase/. It is easy to set up anywhere.
 
 DEMO : http://theflupke.github.io/bgCompare/
 
@@ -25,6 +27,7 @@ DEMO : http://theflupke.github.io/bgCompare/
      <script src="js/bgCompare.min.js"></script>
      <script>
        bgCompare({
+         targetId: "bgCompare", // Your element id
           beforeImage: "img/pvpayvqwuia-christian-sterk-before.jpg", // Your before image
           afterImage: "img/pvpayvqwuia-christian-sterk-after.jpg", // Your after image
         });
@@ -39,7 +42,7 @@ DEMO : http://theflupke.github.io/bgCompare/
           beforeImage: "img/pvpayvqwuia-christian-sterk-before.jpg", // Your before image
           afterImage: "img/pvpayvqwuia-christian-sterk-after.jpg", // Your after image
           bgSize: "contain", // the background-size ("cover", "contain" for responsive awesomeness) (default "contain")
-          targetId: "backgroundCompare", // the id of the element you want the script to load into
+          targetId: "bgCompare", // the id of the element you want the script to load into
           showTooltips: "yes", // show or hide the tooltips next to the handle (default "yes")
           txtBefore: "Before", // the text of the before tooltip (default "Before")
           txtAfter: "After", // the text of the after tooltip (default "After")
