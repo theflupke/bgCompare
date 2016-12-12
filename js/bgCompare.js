@@ -1,3 +1,5 @@
+"use strict";
+
 /* 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                             bgCompare.js
@@ -32,192 +34,180 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 function bgCompare(options) {
     // getting the attributes
-    const before = options.beforeImage;
-    const after = options.afterImage;
-    const bgSize = options.bgSize || "contain";
-    const targetId = options.targetId || "bgCompare;
-    const showTooltips = options.showTooltips || "yes";
-    const txtBefore = options.txtBefore || "Before";
-    const txtAfter = options.txtAfter || "After";
-    const handleTheme = options.handleTheme || "dark-theme";
-    const sliderPos = options.sliderPos || "50%";
+    var before = options.beforeImage;
+    var after = options.afterImage;
+    var bgSize = options.bgSize || "contain";
+    var targetId = options.targetId || "bgCompare";
+    var showTooltips = options.showTooltips || "yes";
+    var txtBefore = options.txtBefore || "Before";
+    var txtAfter = options.txtAfter || "After";
+    var handleTheme = options.handleTheme || "dark-theme";
+    var sliderPos = options.sliderPos || "50%";
 
     if (targetId && before && after) {
-        //Generating the slider
+        (function () {
+            //Generating the slider
 
-        let targetElement = document.getElementById(targetId);
+            var targetElement = document.getElementById(targetId);
 
-        let docfrag = document.createDocumentFragment();
+            var docfrag = document.createDocumentFragment();
 
-        let container1 = document.createElement("div");
-        container1.className = "super-container";
-        docfrag.appendChild(container1);
+            var container1 = document.createElement("div");
+            container1.className = "super-container";
+            docfrag.appendChild(container1);
 
-        let container2 = document.createElement('div');
-        container2.className = "aspect-container";
-        container1.appendChild(container2);
+            var container2 = document.createElement('div');
+            container2.className = "aspect-container";
+            container1.appendChild(container2);
 
-        let aspectCritical = document.createElement('div');
-        aspectCritical.className = "aspect-critical-content";
-        container2.appendChild(aspectCritical);
+            var aspectCritical = document.createElement('div');
+            aspectCritical.className = "aspect-critical-content";
+            container2.appendChild(aspectCritical);
 
-        let beforeWrapper = document.createElement('div');
-        beforeWrapper.className = "before-wrapper";
-        beforeWrapper.id = "before" + targetId;
-        aspectCritical.appendChild(beforeWrapper);
+            var beforeWrapper = document.createElement('div');
+            beforeWrapper.className = "before-wrapper";
+            beforeWrapper.id = "before" + targetId;
+            aspectCritical.appendChild(beforeWrapper);
 
-        let afterWrapper = document.createElement('div');
-        afterWrapper.className = "after-wrapper";
-        beforeWrapper.appendChild(afterWrapper);
+            var afterWrapper = document.createElement('div');
+            afterWrapper.className = "after-wrapper";
+            beforeWrapper.appendChild(afterWrapper);
 
-        let afterImage = document.createElement('div');
-        afterImage.className = "after-image";
-        afterImage.id = "after" + targetId;
-        afterWrapper.appendChild(afterImage);
+            var afterImage = document.createElement('div');
+            afterImage.className = "after-image";
+            afterImage.id = "after" + targetId;
+            afterWrapper.appendChild(afterImage);
 
-        let sliderHandle = document.createElement('div');
-        sliderHandle.className = "comparison-slider handle";
-        sliderHandle.id = handleTheme;
-        aspectCritical.appendChild(sliderHandle);
+            var sliderHandle = document.createElement('div');
+            sliderHandle.className = "comparison-slider handle";
+            sliderHandle.id = handleTheme;
+            aspectCritical.appendChild(sliderHandle);
 
-        if (showTooltips === "yes") {
-            let beforeTooltip = document.createElement('div');
-            beforeTooltip.className = "avant";
-            beforeTooltip.textContent = txtBefore;
-            sliderHandle.appendChild(beforeTooltip);
+            if (showTooltips === "yes") {
+                var beforeTooltip = document.createElement('div');
+                beforeTooltip.className = "avant";
+                beforeTooltip.textContent = txtBefore;
+                sliderHandle.appendChild(beforeTooltip);
 
-            let afterTooltip = document.createElement('div');
-            afterTooltip.className = "apres";
-            afterTooltip.textContent = txtAfter;
-            sliderHandle.appendChild(afterTooltip);
-        }
-
-        targetElement.appendChild(docfrag);
-
-
-        // Putting the images in the background
-
-        let beforeTarget = "#before" + targetId;
-        let afterTarget = "#after" + targetId;
-
-
-        $(beforeTarget).css({
-            "background": "url(" + before + ") center no-repeat",
-            "background-size": bgSize
-        });
-        $(afterTarget).css({
-            "background": "url(" + after + ") center no-repeat",
-            "background-size": bgSize
-        });
-
-
-        $(document).ready(function() {
-            $(document).find('.comparison-slider').css({
-                left: sliderPos
-            });
-            $(document).find('.after-wrapper').css({
-                transform: 'translateX(' + sliderPos + ')'
-            });
-            $(document).find('.after-image').css({
-                transform: 'translateX(-' + sliderPos + ')'
-            });
-        });
-
-
-
-
-        let down = false;
-
-        $(targetElement).find('.comparison-slider').on("mousedown touchstart", function() {
-            down = true;
-            $('.avant, .apres').stop().fadeOut(100);
-
-        });
-        $(targetElement).on("mouseup touchend", function() {
-            down = false;
-            $('.avant, .apres').stop().fadeIn(400);
-        });
-
-        $(targetElement).on("touchmove", function(e) {
-            e.preventDefault();
-            let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-            if (down) {
-
-                let offsets = $(targetElement).find('.before-wrapper').offset();
-                let fullWidth = $(targetElement).find('.before-wrapper').width();
-                let mouseX = touch.pageX - offsets.left;
-
-                if (mouseX < 0) { mouseX = 0; } else if (mouseX > fullWidth) { mouseX = fullWidth }
-
-                $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
-                    left: mouseX,
-                    transition: 'none'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
-                    transform: 'translateX(' + (mouseX) + 'px)',
-                    transition: 'none'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-image').css({
-                    transform: 'translateX(' + (-1 * mouseX) + 'px)',
-                    transition: 'none'
-                });
-
+                var afterTooltip = document.createElement('div');
+                afterTooltip.className = "apres";
+                afterTooltip.textContent = txtAfter;
+                sliderHandle.appendChild(afterTooltip);
             }
 
-        });
+            targetElement.appendChild(docfrag);
 
-        $(targetElement).on("mousemove", function(e) {
+            // Putting the images in the background
 
-            if (down) {
+            var beforeTarget = "#before" + targetId;
+            var afterTarget = "#after" + targetId;
 
-                let offsets = $(targetElement).find('.before-wrapper').offset();
-                let fullWidth = $(targetElement).find('.before-wrapper').width();
-                let mouseX = e.pageX - offsets.left;
-
-
-
-                if (mouseX < 0) { mouseX = 0; } else if (mouseX > fullWidth) { mouseX = fullWidth }
-
-
-                $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
-                    left: mouseX,
-                    transition: 'none'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
-                    transform: 'translateX(' + (mouseX) + 'px)',
-                    transition: 'none'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-image').css({
-                    transform: 'translateX(' + (-1 * mouseX) + 'px)',
-                    transition: 'none'
-                });
-
-            }
-
-        });
-
-
-
-
-
-
-
-        $(window).resize(function() {
-            $(targetElement).find('.comparison-slider').css({
-                left: sliderPos,
-                transition: 'all 1.5s'
+            $(beforeTarget).css({
+                "background": "url(" + before + ") center no-repeat",
+                "background-size": bgSize
             });
-            $(targetElement).find('.after-wrapper').css({
-                transform: 'translateX(' + sliderPos + ')',
-                transition: 'all 1.5s'
-            });
-            $(targetElement).find('.after-image').css({
-                transform: 'translateX(-' + sliderPos + ')',
-                transition: 'all 1.5s'
+            $(afterTarget).css({
+                "background": "url(" + after + ") center no-repeat",
+                "background-size": bgSize
             });
 
-        });
+            $(document).ready(function () {
+                $(document).find('.comparison-slider').css({
+                    left: sliderPos
+                });
+                $(document).find('.after-wrapper').css({
+                    transform: 'translateX(' + sliderPos + ')'
+                });
+                $(document).find('.after-image').css({
+                    transform: 'translateX(-' + sliderPos + ')'
+                });
+            });
 
+            var down = false;
+
+            $(targetElement).find('.comparison-slider').on("mousedown touchstart", function () {
+                down = true;
+                $('.avant, .apres').stop().fadeOut(100);
+            });
+            $(targetElement).on("mouseup touchend", function () {
+                down = false;
+                $('.avant, .apres').stop().fadeIn(400);
+            });
+
+            $(targetElement).on("touchmove", function (e) {
+                e.preventDefault();
+                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                if (down) {
+
+                    var offsets = $(targetElement).find('.before-wrapper').offset();
+                    var fullWidth = $(targetElement).find('.before-wrapper').width();
+                    var mouseX = touch.pageX - offsets.left;
+
+                    if (mouseX < 0) {
+                        mouseX = 0;
+                    } else if (mouseX > fullWidth) {
+                        mouseX = fullWidth;
+                    }
+
+                    $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
+                        left: mouseX,
+                        transition: 'none'
+                    });
+                    $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
+                        transform: 'translateX(' + mouseX + 'px)',
+                        transition: 'none'
+                    });
+                    $(targetElement).find('.before-wrapper').find('.after-image').css({
+                        transform: 'translateX(' + -1 * mouseX + 'px)',
+                        transition: 'none'
+                    });
+                }
+            });
+
+            $(targetElement).on("mousemove", function (e) {
+
+                if (down) {
+
+                    var offsets = $(targetElement).find('.before-wrapper').offset();
+                    var fullWidth = $(targetElement).find('.before-wrapper').width();
+                    var mouseX = e.pageX - offsets.left;
+
+                    if (mouseX < 0) {
+                        mouseX = 0;
+                    } else if (mouseX > fullWidth) {
+                        mouseX = fullWidth;
+                    }
+
+                    $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
+                        left: mouseX,
+                        transition: 'none'
+                    });
+                    $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
+                        transform: 'translateX(' + mouseX + 'px)',
+                        transition: 'none'
+                    });
+                    $(targetElement).find('.before-wrapper').find('.after-image').css({
+                        transform: 'translateX(' + -1 * mouseX + 'px)',
+                        transition: 'none'
+                    });
+                }
+            });
+
+            $(window).resize(function () {
+                $(targetElement).find('.comparison-slider').css({
+                    left: sliderPos,
+                    transition: 'all 1.5s'
+                });
+                $(targetElement).find('.after-wrapper').css({
+                    transform: 'translateX(' + sliderPos + ')',
+                    transition: 'all 1.5s'
+                });
+                $(targetElement).find('.after-image').css({
+                    transform: 'translateX(-' + sliderPos + ')',
+                    transition: 'all 1.5s'
+                });
+            });
+        })();
     } else {
         console.log("Error: could not load slider. A parameter is missing");
     }
