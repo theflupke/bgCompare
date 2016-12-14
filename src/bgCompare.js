@@ -30,6 +30,37 @@ OTHER DEALINGS IN THE SOFTWARE.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+
+
+function fadeOut(el) {
+    el.style.opacity = 1;
+
+    (function fade() {
+        if ((el.style.opacity -= .1) < 0) {
+            el.style.display = "none";
+        } else {
+            requestAnimationFrame(fade);
+        }
+    })();
+}
+
+// fade in
+
+function fadeIn(el, display) {
+    el.style.opacity = 0;
+    el.style.display = display || "block";
+
+    (function fade() {
+        var val = parseFloat(el.style.opacity);
+        if (!((val += .1) > 1)) {
+            el.style.opacity = val;
+            requestAnimationFrame(fade);
+        }
+    })();
+}
+
+
+
 function bgCompare(options) {
     // getting the attributes
     const before = options.beforeImage;
@@ -95,83 +126,44 @@ function bgCompare(options) {
         targetElement.appendChild(docfrag);
 
 
-        // Putting the images in the background
+        let beforeTarget = document.getElementById("before" + targetId);
+        let afterTarget = document.getElementById("after" + targetId);
 
-        let beforeTarget = "#before" + targetId;
-        let afterTarget = "#after" + targetId;
+        beforeTarget.style.background = "url(" + before + ") center no-repeat";
+        beforeTarget.style.backgroundSize = bgSize;
+        afterTarget.style.background = "url(" + after + ") center no-repeat";
+        afterTarget.style.backgroundSize = bgSize;
 
-
-        $(beforeTarget).css({
-            "background": "url(" + before + ") center no-repeat",
-            "background-size": bgSize
-        });
-        $(afterTarget).css({
-            "background": "url(" + after + ") center no-repeat",
-            "background-size": bgSize
-        });
-
-
-        $(document).ready(function() {
-            $(document).find('.comparison-slider').css({
-                left: sliderPos
-            });
-            $(document).find('.after-wrapper').css({
-                transform: 'translateX(' + sliderPos + ')'
-            });
-            $(document).find('.after-image').css({
-                transform: 'translateX(-' + sliderPos + ')'
-            });
-        });
-
-
-
+        let thisComparisonSlider = document.querySelector('#' + targetId + ' .comparison-slider');
+        let thisBeforeWrapper = document.querySelector('#' + targetId + ' .before-wrapper');
+        let thisAfterWrapper = document.querySelector('#' + targetId + ' .after-wrapper');
+        let thisAfterImage = document.querySelector('#' + targetId + ' .after-image');
+        let thisAvant = document.querySelector('#' + targetId + ' .avant');
+        let thisApres = document.querySelector('#' + targetId + ' .apres');
 
         let down = false;
 
-        $(targetElement).find('.comparison-slider').on("mousedown touchstart", function() {
+        thisComparisonSlider.addEventListener("mousedown", function() {
             down = true;
-            $('.avant, .apres').stop().fadeOut(100);
+            fadeOut(thisAvant);
+            fadeOut(thisApres);
 
         });
-        $(targetElement).on("mouseup touchend", function() {
+
+        targetElement.addEventListener("mouseup", function() {
             down = false;
-            $('.avant, .apres').stop().fadeIn(400);
+            fadeIn(thisAvant);
+            fadeIn(thisApres);
         });
 
-        $(targetElement).on("touchmove", function(e) {
-            e.preventDefault();
-            let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        targetElement.addEventListener("mousemove", function(e) {
             if (down) {
 
-                let offsets = $(targetElement).find('.before-wrapper').offset();
-                let fullWidth = $(targetElement).find('.before-wrapper').width();
-                let mouseX = touch.pageX - offsets.left;
-
-                if (mouseX < 0) { mouseX = 0; } else if (mouseX > fullWidth) { mouseX = fullWidth }
-
-                $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
-                    left: mouseX,
-                    transition: 'opacity 1s ease'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
-                    transform: 'translateX(' + (mouseX) + 'px)',
-                    transition: 'opacity 1s ease'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-image').css({
-                    transform: 'translateX(' + (-1 * mouseX) + 'px)',
-                    transition: 'opacity 1s ease'
-                });
-
-            }
-
-        });
-
-        $(targetElement).on("mousemove", function(e) {
-
-            if (down) {
-
-                let offsets = $(targetElement).find('.before-wrapper').offset();
-                let fullWidth = $(targetElement).find('.before-wrapper').width();
+                let offsets = {
+                    top: thisBeforeWrapper.offsetTop,
+                    left: thisBeforeWrapper.offsetLeft
+                }
+                let fullWidth = thisBeforeWrapper.width;
                 let mouseX = e.pageX - offsets.left;
 
 
@@ -179,38 +171,39 @@ function bgCompare(options) {
                 if (mouseX < 0) { mouseX = 0; } else if (mouseX > fullWidth) { mouseX = fullWidth }
 
 
-                $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
-                    left: mouseX,
-                    transition: 'opacity 1s ease'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
-                    transform: 'translateX(' + (mouseX) + 'px)',
-                    transition: 'opacity 1s ease'
-                });
-                $(targetElement).find('.before-wrapper').find('.after-image').css({
-                    transform: 'translateX(' + (-1 * mouseX) + 'px)',
-                    transition: 'opacity 1s ease'
-                });
+                thisComparisonSlider.style.left = mouseX + "px";
+                thisComparisonSlider.style.transition = 'opacity 1s ease';
+
+                thisAfterWrapper.style.transform = 'translateX(' + (mouseX) + 'px)';
+                thisAfterWrapper.style.transition = 'opacity 1s ease';
+
+                thisAfterImage.style.transform = 'translateX(' + (-1 * mouseX) + 'px)';
+                thisAfterImage.style.transition = 'opacity 1s ease';
+
 
             }
-
         });
 
 
 
-        $(window).resize(function() {
-            $(targetElement).find('.comparison-slider').css({
-                left: sliderPos,
-                transition: 'all 1.5s'
-            });
-            $(targetElement).find('.after-wrapper').css({
-                transform: 'translateX(' + sliderPos + ')',
-                transition: 'all 1.5s'
-            });
-            $(targetElement).find('.after-image').css({
-                transform: 'translateX(-' + sliderPos + ')',
-                transition: 'all 1.5s'
-            });
+        window.onload = function() {
+            thisComparisonSlider.style.left = sliderPos;
+            thisAfterWrapper.style.transform = 'translateX(' + sliderPos + ')';
+            thisAfterImage.style.transform = 'translateX(-' + sliderPos + ')';
+            thisBeforeWrapper.style.opacity = '1';
+            thisAfterImage.style.opacity = '1';
+        }
+
+        window.addEventListener('resize', function() {
+
+            thisComparisonSlider.style.left = sliderPos;
+            thisComparisonSlider.style.transition = 'left 1.5s';
+
+            thisAfterWrapper.style.transform = 'translateX(' + sliderPos + ')';
+            thisAfterWrapper.style.transition = 'transform 1.5s';
+
+            thisAfterImage.style.transform = 'translateX(-' + sliderPos + ')';
+            thisAfterImage.style.transition = 'transform 1.5s';
 
         });
 

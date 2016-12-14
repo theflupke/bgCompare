@@ -32,183 +32,175 @@ OTHER DEALINGS IN THE SOFTWARE.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-function bgCompare(options) {
-    // getting the attributes
-    var before = options.beforeImage;
-    var after = options.afterImage;
-    var bgSize = options.bgSize || "contain";
-    var targetId = options.targetId || "bgCompare";
-    var showTooltips = options.showTooltips || "yes";
-    var txtBefore = options.txtBefore || "Before";
-    var txtAfter = options.txtAfter || "After";
-    var handleTheme = options.handleTheme || "dark-theme";
-    var sliderPos = options.sliderPos || "50%";
+function fadeOut(el) {
+        el.style.opacity = 1;
 
-    if (targetId && before && after) {
-        (function () {
-            //Generating the slider
-
-            var targetElement = document.getElementById(targetId);
-
-            var docfrag = document.createDocumentFragment();
-
-            var container1 = document.createElement("div");
-            container1.className = "super-container";
-            docfrag.appendChild(container1);
-
-            var container2 = document.createElement('div');
-            container2.className = "aspect-container";
-            container1.appendChild(container2);
-
-            var aspectCritical = document.createElement('div');
-            aspectCritical.className = "aspect-critical-content";
-            container2.appendChild(aspectCritical);
-
-            var beforeWrapper = document.createElement('div');
-            beforeWrapper.className = "before-wrapper";
-            beforeWrapper.id = "before" + targetId;
-            aspectCritical.appendChild(beforeWrapper);
-
-            var afterWrapper = document.createElement('div');
-            afterWrapper.className = "after-wrapper";
-            beforeWrapper.appendChild(afterWrapper);
-
-            var afterImage = document.createElement('div');
-            afterImage.className = "after-image";
-            afterImage.id = "after" + targetId;
-            afterWrapper.appendChild(afterImage);
-
-            var sliderHandle = document.createElement('div');
-            sliderHandle.className = "comparison-slider handle";
-            sliderHandle.id = handleTheme;
-            aspectCritical.appendChild(sliderHandle);
-
-            if (showTooltips === "yes") {
-                var beforeTooltip = document.createElement('div');
-                beforeTooltip.className = "avant";
-                beforeTooltip.textContent = txtBefore;
-                sliderHandle.appendChild(beforeTooltip);
-
-                var afterTooltip = document.createElement('div');
-                afterTooltip.className = "apres";
-                afterTooltip.textContent = txtAfter;
-                sliderHandle.appendChild(afterTooltip);
-            }
-
-            targetElement.appendChild(docfrag);
-
-            // Putting the images in the background
-
-            var beforeTarget = "#before" + targetId;
-            var afterTarget = "#after" + targetId;
-
-            $(beforeTarget).css({
-                "background": "url(" + before + ") center no-repeat",
-                "background-size": bgSize
-            });
-            $(afterTarget).css({
-                "background": "url(" + after + ") center no-repeat",
-                "background-size": bgSize
-            });
-
-            $(document).ready(function () {
-                $(document).find('.comparison-slider').css({
-                    left: sliderPos
-                });
-                $(document).find('.after-wrapper').css({
-                    transform: 'translateX(' + sliderPos + ')'
-                });
-                $(document).find('.after-image').css({
-                    transform: 'translateX(-' + sliderPos + ')'
-                });
-            });
-
-            var down = false;
-
-            $(targetElement).find('.comparison-slider').on("mousedown touchstart", function () {
-                down = true;
-                $('.avant, .apres').stop().fadeOut(100);
-            });
-            $(targetElement).on("mouseup touchend", function () {
-                down = false;
-                $('.avant, .apres').stop().fadeIn(400);
-            });
-
-            $(targetElement).on("touchmove", function (e) {
-                e.preventDefault();
-                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-                if (down) {
-
-                    var offsets = $(targetElement).find('.before-wrapper').offset();
-                    var fullWidth = $(targetElement).find('.before-wrapper').width();
-                    var mouseX = touch.pageX - offsets.left;
-
-                    if (mouseX < 0) {
-                        mouseX = 0;
-                    } else if (mouseX > fullWidth) {
-                        mouseX = fullWidth;
-                    }
-
-                    $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
-                        left: mouseX,
-                        transition: 'opacity 1s ease'
-                    });
-                    $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
-                        transform: 'translateX(' + mouseX + 'px)',
-                        transition: 'opacity 1s ease'
-                    });
-                    $(targetElement).find('.before-wrapper').find('.after-image').css({
-                        transform: 'translateX(' + -1 * mouseX + 'px)',
-                        transition: 'opacity 1s ease'
-                    });
+        (function fade() {
+                if ((el.style.opacity -= .1) < 0) {
+                        el.style.display = "none";
+                } else {
+                        requestAnimationFrame(fade);
                 }
-            });
-
-            $(targetElement).on("mousemove", function (e) {
-
-                if (down) {
-
-                    var offsets = $(targetElement).find('.before-wrapper').offset();
-                    var fullWidth = $(targetElement).find('.before-wrapper').width();
-                    var mouseX = e.pageX - offsets.left;
-
-                    if (mouseX < 0) {
-                        mouseX = 0;
-                    } else if (mouseX > fullWidth) {
-                        mouseX = fullWidth;
-                    }
-
-                    $(targetElement).find('.before-wrapper').parent().find('.comparison-slider').css({
-                        left: mouseX,
-                        transition: 'opacity 1s ease'
-                    });
-                    $(targetElement).find('.before-wrapper').find('.after-wrapper').css({
-                        transform: 'translateX(' + mouseX + 'px)',
-                        transition: 'opacity 1s ease'
-                    });
-                    $(targetElement).find('.before-wrapper').find('.after-image').css({
-                        transform: 'translateX(' + -1 * mouseX + 'px)',
-                        transition: 'opacity 1s ease'
-                    });
-                }
-            });
-
-            $(window).resize(function () {
-                $(targetElement).find('.comparison-slider').css({
-                    left: sliderPos,
-                    transition: 'all 1.5s'
-                });
-                $(targetElement).find('.after-wrapper').css({
-                    transform: 'translateX(' + sliderPos + ')',
-                    transition: 'all 1.5s'
-                });
-                $(targetElement).find('.after-image').css({
-                    transform: 'translateX(-' + sliderPos + ')',
-                    transition: 'all 1.5s'
-                });
-            });
         })();
-    } else {
-        console.log("Error: could not load slider. A parameter is missing");
-    }
+}
+
+// fade in
+
+function fadeIn(el, display) {
+        el.style.opacity = 0;
+        el.style.display = display || "block";
+
+        (function fade() {
+                var val = parseFloat(el.style.opacity);
+                if (!((val += .1) > 1)) {
+                        el.style.opacity = val;
+                        requestAnimationFrame(fade);
+                }
+        })();
+}
+
+function bgCompare(options) {
+        // getting the attributes
+        var before = options.beforeImage;
+        var after = options.afterImage;
+        var bgSize = options.bgSize || "contain";
+        var targetId = options.targetId || "bgCompare";
+        var showTooltips = options.showTooltips || "yes";
+        var txtBefore = options.txtBefore || "Before";
+        var txtAfter = options.txtAfter || "After";
+        var handleTheme = options.handleTheme || "dark-theme";
+        var sliderPos = options.sliderPos || "50%";
+
+        if (targetId && before && after) {
+                (function () {
+                        //Generating the slider
+
+                        var targetElement = document.getElementById(targetId);
+
+                        var docfrag = document.createDocumentFragment();
+
+                        var container1 = document.createElement("div");
+                        container1.className = "super-container";
+                        docfrag.appendChild(container1);
+
+                        var container2 = document.createElement('div');
+                        container2.className = "aspect-container";
+                        container1.appendChild(container2);
+
+                        var aspectCritical = document.createElement('div');
+                        aspectCritical.className = "aspect-critical-content";
+                        container2.appendChild(aspectCritical);
+
+                        var beforeWrapper = document.createElement('div');
+                        beforeWrapper.className = "before-wrapper";
+                        beforeWrapper.id = "before" + targetId;
+                        aspectCritical.appendChild(beforeWrapper);
+
+                        var afterWrapper = document.createElement('div');
+                        afterWrapper.className = "after-wrapper";
+                        beforeWrapper.appendChild(afterWrapper);
+
+                        var afterImage = document.createElement('div');
+                        afterImage.className = "after-image";
+                        afterImage.id = "after" + targetId;
+                        afterWrapper.appendChild(afterImage);
+
+                        var sliderHandle = document.createElement('div');
+                        sliderHandle.className = "comparison-slider handle";
+                        sliderHandle.id = handleTheme;
+                        aspectCritical.appendChild(sliderHandle);
+
+                        if (showTooltips === "yes") {
+                                var beforeTooltip = document.createElement('div');
+                                beforeTooltip.className = "avant";
+                                beforeTooltip.textContent = txtBefore;
+                                sliderHandle.appendChild(beforeTooltip);
+
+                                var afterTooltip = document.createElement('div');
+                                afterTooltip.className = "apres";
+                                afterTooltip.textContent = txtAfter;
+                                sliderHandle.appendChild(afterTooltip);
+                        }
+
+                        targetElement.appendChild(docfrag);
+
+                        var beforeTarget = document.getElementById("before" + targetId);
+                        var afterTarget = document.getElementById("after" + targetId);
+
+                        beforeTarget.style.background = "url(" + before + ") center no-repeat";
+                        beforeTarget.style.backgroundSize = bgSize;
+                        afterTarget.style.background = "url(" + after + ") center no-repeat";
+                        afterTarget.style.backgroundSize = bgSize;
+
+                        var thisComparisonSlider = document.querySelector('#' + targetId + ' .comparison-slider');
+                        var thisBeforeWrapper = document.querySelector('#' + targetId + ' .before-wrapper');
+                        var thisAfterWrapper = document.querySelector('#' + targetId + ' .after-wrapper');
+                        var thisAfterImage = document.querySelector('#' + targetId + ' .after-image');
+                        var thisAvant = document.querySelector('#' + targetId + ' .avant');
+                        var thisApres = document.querySelector('#' + targetId + ' .apres');
+
+                        var down = false;
+
+                        thisComparisonSlider.addEventListener("mousedown", function () {
+                                down = true;
+                                fadeOut(thisAvant);
+                                fadeOut(thisApres);
+                        });
+
+                        targetElement.addEventListener("mouseup", function () {
+                                down = false;
+                                fadeIn(thisAvant);
+                                fadeIn(thisApres);
+                        });
+
+                        targetElement.addEventListener("mousemove", function (e) {
+                                if (down) {
+
+                                        var offsets = {
+                                                top: thisBeforeWrapper.offsetTop,
+                                                left: thisBeforeWrapper.offsetLeft
+                                        };
+                                        var fullWidth = thisBeforeWrapper.width;
+                                        var mouseX = e.pageX - offsets.left;
+
+                                        if (mouseX < 0) {
+                                                mouseX = 0;
+                                        } else if (mouseX > fullWidth) {
+                                                mouseX = fullWidth;
+                                        }
+
+                                        thisComparisonSlider.style.left = mouseX + "px";
+                                        thisComparisonSlider.style.transition = 'opacity 1s ease';
+
+                                        thisAfterWrapper.style.transform = 'translateX(' + mouseX + 'px)';
+                                        thisAfterWrapper.style.transition = 'opacity 1s ease';
+
+                                        thisAfterImage.style.transform = 'translateX(' + -1 * mouseX + 'px)';
+                                        thisAfterImage.style.transition = 'opacity 1s ease';
+                                }
+                        });
+
+                        window.onload = function () {
+                                thisComparisonSlider.style.left = sliderPos;
+                                thisAfterWrapper.style.transform = 'translateX(' + sliderPos + ')';
+                                thisAfterImage.style.transform = 'translateX(-' + sliderPos + ')';
+                                thisBeforeWrapper.style.opacity = '1';
+                                thisAfterImage.style.opacity = '1';
+                        };
+
+                        window.addEventListener('resize', function () {
+
+                                thisComparisonSlider.style.left = sliderPos;
+                                thisComparisonSlider.style.transition = 'left 1.5s';
+
+                                thisAfterWrapper.style.transform = 'translateX(' + sliderPos + ')';
+                                thisAfterWrapper.style.transition = 'transform 1.5s';
+
+                                thisAfterImage.style.transform = 'translateX(-' + sliderPos + ')';
+                                thisAfterImage.style.transition = 'transform 1.5s';
+                        });
+                })();
+        } else {
+                console.log("Error: could not load slider. A parameter is missing");
+        }
 }
