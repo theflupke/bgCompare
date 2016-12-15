@@ -30,7 +30,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-
+// Fade Animations
+// -------------------------------------------------
 
 function fadeOut(el) {
     el.style.opacity = 1;
@@ -60,6 +61,29 @@ function fadeIn(el, display) {
 }
 
 
+// Manage touch events as mouse events
+// -------------------------------------------------
+
+function touchHandler(event) {
+    var touch = event.changedTouches[0];
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent({
+            touchstart: "mousedown",
+            touchmove: "mousemove",
+            touchend: "mouseup"
+        }[event.type], true, true, window, 1,
+        touch.screenX, touch.screenY,
+        touch.clientX, touch.clientY, false,
+        false, false, false, 0, null);
+
+    touch.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+}
+
+
+// The main course
+// -------------------------------------------------
 
 function bgCompare(options) {
     // getting the attributes
@@ -126,20 +150,17 @@ function bgCompare(options) {
         targetElement.appendChild(docfrag);
 
 
-        let beforeTarget = document.getElementById("before" + targetId);
-        let afterTarget = document.getElementById("after" + targetId);
-
-        beforeTarget.style.background = "url(" + before + ") center no-repeat";
-        beforeTarget.style.backgroundSize = bgSize;
-        afterTarget.style.background = "url(" + after + ") center no-repeat";
-        afterTarget.style.backgroundSize = bgSize;
-
         let thisComparisonSlider = document.querySelector('#' + targetId + ' .comparison-slider');
         let thisBeforeWrapper = document.querySelector('#' + targetId + ' .before-wrapper');
         let thisAfterWrapper = document.querySelector('#' + targetId + ' .after-wrapper');
         let thisAfterImage = document.querySelector('#' + targetId + ' .after-image');
         let thisAvant = document.querySelector('#' + targetId + ' .avant');
         let thisApres = document.querySelector('#' + targetId + ' .apres');
+
+        thisBeforeWrapper.style.background = "url(" + before + ") center no-repeat";
+        thisBeforeWrapper.style.backgroundSize = bgSize;
+        thisAfterImage.style.background = "url(" + after + ") center no-repeat";
+        thisAfterImage.style.backgroundSize = bgSize;
 
         let down = false;
 
@@ -184,6 +205,12 @@ function bgCompare(options) {
             }
         });
 
+
+
+        targetElement.addEventListener("touchstart", touchHandler, true);
+        targetElement.addEventListener("touchmove", touchHandler, true);
+        targetElement.addEventListener("touchend", touchHandler, true);
+        targetElement.addEventListener("touchcancel", touchHandler, true);
 
 
         window.onload = function() {

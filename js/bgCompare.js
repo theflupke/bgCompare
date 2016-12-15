@@ -32,6 +32,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+// Fade Animations
+// -------------------------------------------------
+
 function fadeOut(el) {
         el.style.opacity = 1;
 
@@ -58,6 +61,26 @@ function fadeIn(el, display) {
                 }
         })();
 }
+
+// Manage touch events as mouse events
+// -------------------------------------------------
+
+function touchHandler(event) {
+        var touch = event.changedTouches[0];
+
+        var simulatedEvent = document.createEvent("MouseEvent");
+        simulatedEvent.initMouseEvent({
+                touchstart: "mousedown",
+                touchmove: "mousemove",
+                touchend: "mouseup"
+        }[event.type], true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+
+        touch.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+}
+
+// The main course
+// -------------------------------------------------
 
 function bgCompare(options) {
         // getting the attributes
@@ -124,20 +147,17 @@ function bgCompare(options) {
 
                         targetElement.appendChild(docfrag);
 
-                        var beforeTarget = document.getElementById("before" + targetId);
-                        var afterTarget = document.getElementById("after" + targetId);
-
-                        beforeTarget.style.background = "url(" + before + ") center no-repeat";
-                        beforeTarget.style.backgroundSize = bgSize;
-                        afterTarget.style.background = "url(" + after + ") center no-repeat";
-                        afterTarget.style.backgroundSize = bgSize;
-
                         var thisComparisonSlider = document.querySelector('#' + targetId + ' .comparison-slider');
                         var thisBeforeWrapper = document.querySelector('#' + targetId + ' .before-wrapper');
                         var thisAfterWrapper = document.querySelector('#' + targetId + ' .after-wrapper');
                         var thisAfterImage = document.querySelector('#' + targetId + ' .after-image');
                         var thisAvant = document.querySelector('#' + targetId + ' .avant');
                         var thisApres = document.querySelector('#' + targetId + ' .apres');
+
+                        thisBeforeWrapper.style.background = "url(" + before + ") center no-repeat";
+                        thisBeforeWrapper.style.backgroundSize = bgSize;
+                        thisAfterImage.style.background = "url(" + after + ") center no-repeat";
+                        thisAfterImage.style.backgroundSize = bgSize;
 
                         var down = false;
 
@@ -179,6 +199,11 @@ function bgCompare(options) {
                                         thisAfterImage.style.transition = 'opacity 1s ease';
                                 }
                         });
+
+                        targetElement.addEventListener("touchstart", touchHandler, true);
+                        targetElement.addEventListener("touchmove", touchHandler, true);
+                        targetElement.addEventListener("touchend", touchHandler, true);
+                        targetElement.addEventListener("touchcancel", touchHandler, true);
 
                         window.onload = function () {
                                 thisComparisonSlider.style.left = sliderPos;
