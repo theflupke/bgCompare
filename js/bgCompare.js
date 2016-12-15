@@ -173,6 +173,10 @@ function bgCompare(options) {
                                 fadeIn(thisApres);
                         });
 
+                        window.addEventListener("mouseup", function () {
+                                down = false;
+                        });
+
                         targetElement.addEventListener("mousemove", function (e) {
                                 if (down) {
 
@@ -180,7 +184,7 @@ function bgCompare(options) {
                                                 top: thisBeforeWrapper.offsetTop,
                                                 left: thisBeforeWrapper.offsetLeft
                                         };
-                                        var fullWidth = thisBeforeWrapper.width;
+                                        var fullWidth = thisBeforeWrapper.clientWidth;
                                         var mouseX = e.pageX - offsets.left;
 
                                         if (mouseX < 0) {
@@ -188,7 +192,7 @@ function bgCompare(options) {
                                         } else if (mouseX > fullWidth) {
                                                 mouseX = fullWidth;
                                         }
-
+                                        console.log(fullWidth);
                                         thisComparisonSlider.style.left = mouseX + "px";
                                         thisComparisonSlider.style.transition = 'opacity 1s ease';
 
